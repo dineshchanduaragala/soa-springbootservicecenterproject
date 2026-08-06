@@ -13,6 +13,7 @@ import com.klef.soa.service.ServiceCenterService;
 @RequestMapping("/servicecenter")
 public class ServiceCenterController
 {
+
     @Autowired
     private ServiceCenterService service;
 
@@ -35,36 +36,21 @@ public class ServiceCenterController
     }
 
     @GetMapping("/display")
-    public ResponseEntity<?> displayById(@RequestParam Long id)
+    public ResponseEntity<ServiceCenter> displayById(@RequestParam Long id)
     {
-        ServiceCenter sc = service.displayServiceCenterById(id);
-
-        if(sc!=null)
-            return ResponseEntity.ok(sc);
-
-        return ResponseEntity.status(404).body("Service Center ID Not Found");
+        return ResponseEntity.ok(service.displayServiceCenterById(id));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody ServiceCenter sc)
+    public ResponseEntity<ServiceCenter> update(@RequestBody ServiceCenter sc)
     {
-        ServiceCenter center = service.updateServiceCenter(sc);
-
-        if(center!=null)
-            return ResponseEntity.ok(center);
-
-        return ResponseEntity.status(404).body("Service Center ID Not Found");
+        return ResponseEntity.ok(service.updateServiceCenter(sc));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id)
     {
-    	String msg = service.deleteServiceCenter(id);
-
-    	if(msg.equals("Service Center Deleted Successfully"))
-    	    return ResponseEntity.ok(msg);
-
-    	return ResponseEntity.status(404).body(msg);
+        return ResponseEntity.ok(service.deleteServiceCenter(id));
     }
 
     @GetMapping("/displaybyname/{name}")
@@ -78,5 +64,5 @@ public class ServiceCenterController
     {
         return ResponseEntity.ok(service.displayByType(type));
     }
-    
+
 }
